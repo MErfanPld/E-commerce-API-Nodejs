@@ -1,7 +1,7 @@
-const Product = require('../models/Product');
-const { StatusCodes } = require('http-status-codes');
-const CustomError = require('../errors');
-const path = require('path');
+const Product = require("../models/Product");
+const { StatusCodes } = require("http-status-codes");
+const CustomError = require("../errors");
+const path = require("path");
 
 //* ================ Create Product ================
 const createProduct = async (req, res) => {
@@ -19,7 +19,7 @@ const getAllProducts = async (req, res) => {
 //* ================ Get Product ================
 const getProduct = async (req, res) => {
   const { id: productId } = req.params;
-  const product = await Product.findOne({ _id: productId });
+  const product = await Product.findOne({ _id: productId }).populate("reviews");
   if (!product) {
     throw new CustomError.NotFoundError(`No product with id : ${productId}`);
   }
@@ -44,12 +44,13 @@ const updateProduct = async (req, res) => {
 //* ================ Delete Product ================
 const deleteProduct = async (req, res) => {
   const { id: productId } = req.params;
-  const product = await Product.findOneAndDelete({ _id: productId });
+  const product = await Product.findOne({ _id: productId });
   if (!product) {
     throw new CustomError.NotFoundError(`No product with id : ${productId}`);
   }
 
-  res.status(StatusCodes.OK).json({ msg: "Product Deleted Success ..." });
+  await product.remove();
+  res.status(StatusCodes.OK).json({ msg: "Success! Product removed." });
 };
 
 //* ================ Upload Product Image ================

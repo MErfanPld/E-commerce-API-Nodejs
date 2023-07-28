@@ -14,6 +14,7 @@ const connectDB = require("./db/connect");
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
 
 // Env
 dotEnv.config();
@@ -25,12 +26,13 @@ app.use(morgan("tiny"));
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(express.static("./public"));
 app.use(express.json());
-app.use(fileUpload())
+app.use(fileUpload());
 
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 // Error Middleware
 app.use(notFoundMiddleware);
