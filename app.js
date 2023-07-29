@@ -15,6 +15,7 @@ const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
 const productRoutes = require("./routes/productRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
+const orderRoutes = require("./routes/orderRoutes");
 
 // Env
 dotEnv.config();
@@ -33,6 +34,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/orders", orderRoutes);
 
 // Error Middleware
 app.use(notFoundMiddleware);
